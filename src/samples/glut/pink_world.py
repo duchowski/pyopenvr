@@ -1,4 +1,4 @@
-#/bin/env python
+#!/bin/env python
 
 '''
 Simple "Pink World" example for pyopenvr python bindings for OpenVR virtual reality SDK.
@@ -56,7 +56,7 @@ class PinkWorld(object):
         glBindRenderbuffer(GL_RENDERBUFFER, self.depth_buffer)
         glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, self.vr_width, self.vr_height)
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, self.depth_buffer)
-        self.texture_id = glGenTextures(1)
+        self.texture_id = int(glGenTextures(1))
         glBindTexture(GL_TEXTURE_2D, self.texture_id)
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, self.vr_width, self.vr_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, None)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
@@ -115,7 +115,8 @@ class PinkWorld(object):
         self.compositor.submit(openvr.Eye_Right, self.texture)
         glBindFramebuffer(GL_FRAMEBUFFER, 0)
         
-    def key_press(self, key, x, y):
+    def key_press(self, bkey, x, y):
+        key = bkey.decode("utf-8")
         "Close the application when the player presses ESCAPE"
         if ord(key) == 27:
             # print "Escape!"
